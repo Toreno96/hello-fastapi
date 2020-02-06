@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-from .user import User
 
 # Shared properties
 class ItemBase(BaseModel):
