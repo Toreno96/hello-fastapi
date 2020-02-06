@@ -9,6 +9,9 @@ from app.crud.base import CRUDBase
 
 
 class CRUDItem(CRUDBase[Item, ItemCreate, ItemUpdate]):
+    def get_query_object(self, db_session: Session):
+        return super().get_query_object(db_session).filter(self.model.is_deleted == False)
+
     def create_with_owner(
         self, db_session: Session, *, obj_in: ItemCreate, owner_id: int
     ) -> Item:
@@ -23,12 +26,18 @@ class CRUDItem(CRUDBase[Item, ItemCreate, ItemUpdate]):
         self, db_session: Session, *, owner_id: int, skip=0, limit=100
     ) -> List[Item]:
         return (
-            db_session.query(self.model)
+            self.get_query_object(db_session)
             .filter(Item.owner_id == owner_id)
             .offset(skip)
             .limit(limit)
             .all()
         )
+
+    def remove(self, db_session: Session, *, id: int) -> Item:
+        obj = self.get_query_object(db_session).filter(self.model.id == id).first()
+        obj.is_deleted = True
+        db_session.commit()
+        return obj
 
 
 item = CRUDItem(Item)

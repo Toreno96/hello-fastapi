@@ -10,7 +10,7 @@ from app.crud.base import CRUDBase
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     def get_by_email(self, db_session: Session, *, email: str) -> Optional[User]:
-        return db_session.query(User).filter(User.email == email).first()
+        return self.get_query_object(db_session).filter(User.email == email).first()
 
     def create(self, db_session: Session, *, obj_in: UserCreate) -> User:
         db_obj = User(

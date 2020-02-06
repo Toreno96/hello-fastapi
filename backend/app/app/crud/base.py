@@ -23,11 +23,14 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         self.model = model
 
+    def get_query_object(self, db_session):
+        return db_session.query(self.model)
+
     def get(self, db_session: Session, id: int) -> Optional[ModelType]:
-        return db_session.query(self.model).filter(self.model.id == id).first()
+        return self.get_query_object(db_session).filter(self.model.id == id).first()
 
     def get_multi(self, db_session: Session, *, skip=0, limit=100) -> List[ModelType]:
-        return db_session.query(self.model).offset(skip).limit(limit).all()
+        return self.get_query_object(db_session).offset(skip).limit(limit).all()
 
     def create(self, db_session: Session, *, obj_in: CreateSchemaType) -> ModelType:
         obj_in_data = jsonable_encoder(obj_in)
@@ -51,7 +54,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return db_obj
 
     def remove(self, db_session: Session, *, id: int) -> ModelType:
-        obj = db_session.query(self.model).get(id)
+        obj = self.get_query_object(db_session).filter(self.model.id == id).first()
         db_session.delete(obj)
         db_session.commit()
         return obj
