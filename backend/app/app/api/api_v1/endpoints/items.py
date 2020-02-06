@@ -2,6 +2,7 @@ from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from starlette import status
 
 from app import crud
 from app.api.utils.db import get_db
@@ -85,7 +86,7 @@ def read_item(
     return item
 
 
-@router.delete("/{id}", response_model=Item)
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_item(
     *,
     db: Session = Depends(get_db),
