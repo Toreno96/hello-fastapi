@@ -13,3 +13,9 @@ services:
   backend:
     ports:
       - '8888:8888'
+  grafana:
+    ports:
+      - "3000:3000"
+  prometheus:
+    ports:
+      - "9090:9090"
