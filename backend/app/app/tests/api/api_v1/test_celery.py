@@ -1,14 +1,10 @@
-import requests
-
 from app.core import config
-from app.tests.utils.utils import get_server_api
 
 
-def test_celery_worker_test(superuser_token_headers):
-    server_api = get_server_api()
+def test_celery_worker_test(test_client, superuser_token_headers):
     data = {"msg": "test"}
-    r = requests.post(
-        f"{server_api}{config.API_V1_STR}/utils/test-celery/",
+    r = test_client.post(
+        f"{config.API_V1_STR}/utils/test-celery/",
         json=data,
         headers=superuser_token_headers,
     )

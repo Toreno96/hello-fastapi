@@ -1,6 +1,6 @@
 FROM python:3.7
 
-RUN pip install requests pytest tenacity passlib[bcrypt] "fastapi>=0.16.0" psycopg2-binary SQLAlchemy sqlalchemy_mptt starlette-prometheus
+RUN pip install celery~=4.3 passlib[bcrypt] pytest tenacity requests emails "fastapi>=0.47.0" pyjwt python-multipart email_validator jinja2 psycopg2-binary alembic SQLAlchemy sqlalchemy_mptt starlette-prometheus
 
 # For development, Jupyter remote kernel, Hydrogen
 # Using inside the container:
@@ -10,6 +10,7 @@ RUN bash -c "if [ $env == 'dev' ] ; then pip install jupyterlab ; fi"
 EXPOSE 8888
 
 COPY ./app /app
+WORKDIR /app/
 
 ENV PYTHONPATH=/app
 

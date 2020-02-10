@@ -1,17 +1,11 @@
-import requests
-
 from app.core import config
 from app.tests.utils.item import create_random_item
-from app.tests.utils.utils import get_server_api
 
 
-def test_create_item(superuser_token_headers):
-    server_api = get_server_api()
+def test_create_item(test_client, superuser_token_headers):
     data = {"title": "Foo", "description": "Fighters"}
-    response = requests.post(
-        f"{server_api}{config.API_V1_STR}/items/",
-        headers=superuser_token_headers,
-        json=data,
+    response = test_client.post(
+        f"{config.API_V1_STR}/items/", headers=superuser_token_headers, json=data,
     )
     assert response.status_code == 200
     content = response.json()
@@ -21,12 +15,10 @@ def test_create_item(superuser_token_headers):
     assert "owner_id" in content
 
 
-def test_read_item(superuser_token_headers):
+def test_read_item(test_client, superuser_token_headers):
     item = create_random_item()
-    server_api = get_server_api()
-    response = requests.get(
-        f"{server_api}{config.API_V1_STR}/items/{item.id}",
-        headers=superuser_token_headers,
+    response = test_client.get(
+        f"{config.API_V1_STR}/items/{item.id}", headers=superuser_token_headers,
     )
     assert response.status_code == 200
     content = response.json()
