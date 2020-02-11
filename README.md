@@ -1,5 +1,9 @@
 # Hello FastAPI
 
+It is experimental project generated from the <https://github.com/tiangolo/full-stack-fastapi-postgresql>.
+
+It is not supposed to be production-ready.
+
 ## Backend Requirements
 
 * Docker
