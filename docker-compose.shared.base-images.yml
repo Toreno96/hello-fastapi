@@ -2,6 +2,8 @@ version: '3.3'
 services:
   db:
     image: postgres:11
+  db-tests:
+    image: postgres:11
   queue:
     image: rabbitmq:3
     # Using the below image instead is required to enable the "Broker" tab in the flower UI:
