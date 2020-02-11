@@ -14,6 +14,7 @@ password_reset_jwt_subject = "preset"
 
 
 def send_email(email_to: str, subject_template="", html_template="", environment={}):
+    return
     assert config.EMAILS_ENABLED, "no provided configuration for email variables"
     message = emails.Message(
         subject=JinjaTemplate(subject_template),
@@ -55,6 +56,8 @@ def send_reset_password_email(email_to: str, email: str, token: str):
         use_token = token
     server_host = config.SERVER_HOST
     link = f"{server_host}/reset-password?token={use_token}"
+    print(use_token)
+    print(link)
     send_email(
         email_to=email_to,
         subject_template=subject,
