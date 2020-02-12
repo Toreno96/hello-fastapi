@@ -54,17 +54,22 @@ class CategoryNodeBase(BaseModel):
 
 
 class CategoryNode(CategoryNodeBase):
-    """This and CategoryNodeBase are workaround classes, because it is not possible to do:
+    """This and CategoryNodeBase are workaround classes, because FastAPI have problems with self-referencing models:
+    <https://pydantic-docs.helpmanual.io/usage/postponed_annotations/#self-referencing-models>
+
+    It is not working:
 
     ```
     class CategoryNode(BaseModel):
         ...
-        children: List[CategoryNode]  # should be possible since Python 4.0: https://stackoverflow.com/a/33533514/5875021
+        children: List['CategoryNode']
+
+    CategoryNode.update_forward_refs()
     ```
 
-    Nor `List['CategoryNode']`.
+    Nor use of `__future__.annotations`.
 
-    There are errors during validation and docs generation.
+    There are errors during startup.
     """
 
     children: List[CategoryNodeBase] = None
