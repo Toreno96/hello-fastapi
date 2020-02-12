@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from app.core.security import get_password_hash, verify_password
 from app.crud.base import CRUDBase
 from app.models.user import User
-from app.schemas.user import UserCreate, UserUpdate
+from app.schemas.user import UserCreate, UserInDB, UserUpdate
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
@@ -23,6 +23,13 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         db_session.commit()
         db_session.refresh(db_obj)
         return db_obj
+
+    def update(self, db_session: Session, *, db_obj: User, obj_in: UserUpdate) -> User:
+        obj_in = UserInDB(
+            **obj_in.dict(exclude_unset=True),
+            hashed_password=get_password_hash(obj_in.password)
+        )
+        return super().update(db_session, db_obj=db_obj, obj_in=obj_in)
 
     def authenticate(
         self, db_session: Session, *, email: str, password: str
