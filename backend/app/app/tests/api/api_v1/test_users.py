@@ -13,7 +13,7 @@ def test_get_users_superuser_me(test_client, superuser_token_headers):
     assert current_user
     assert current_user["is_active"] is True
     assert current_user["is_superuser"]
-    assert current_user["email"] == config.FIRST_SUPERUSER
+    assert current_user["email"] == config.config.FIRST_SUPERUSER
 
 
 def test_get_users_normal_user_me(test_client, normal_user_token_headers):

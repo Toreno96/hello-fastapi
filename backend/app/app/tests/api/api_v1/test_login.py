@@ -3,8 +3,8 @@ from app.core import config
 
 def test_get_access_token(test_client):
     login_data = {
-        "username": config.FIRST_SUPERUSER,
-        "password": config.FIRST_SUPERUSER_PASSWORD,
+        "username": config.config.FIRST_SUPERUSER,
+        "password": config.config.FIRST_SUPERUSER_PASSWORD,
     }
     r = test_client.post(f"{config.API_V1_STR}/login/access-token", data=login_data)
     tokens = r.json()
