@@ -18,11 +18,11 @@ services:
       dockerfile: tests.dockerfile
       args: 
         env: dev
-  frontend:
-    build: 
-      context: ./frontend
-      args: 
-        FRONTEND_ENV: dev
+  # frontend:
+  #   build: 
+  #     context: ./frontend
+  #     args: 
+  #       FRONTEND_ENV: dev
   prometheus:
     build:
         context: ./backend
