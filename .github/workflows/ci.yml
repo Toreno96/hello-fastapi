@@ -16,5 +16,5 @@ jobs:
     - name: Check logs
       run: docker-compose logs backend
     - name: Run test suite
-      # Workaround for error 'the input device is not a TTY': https://github.com/docker/compose/issues/5696
-      run: COMPOSE_INTERACTIVE_NO_CLI=1 docker-compose exec backend-tests /tests-start.sh
+      # Workaround for error 'the input device is not a TTY': https://stackoverflow.com/a/57565119/5875021
+      run: docker-compose exec -T backend-tests /tests-start.sh
