@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/Toreno96/hello-fastapi.svg?branch=master)](https://travis-ci.com/Toreno96/hello-fastapi)
+
 # Hello FastAPI
 
 It is experimental project generated from the <https://github.com/tiangolo/full-stack-fastapi-postgresql>.
