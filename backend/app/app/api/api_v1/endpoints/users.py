@@ -54,11 +54,22 @@ def create_user(
     return user
 
 
+def strong_password(
+    password: str = Body(
+        ...,
+        embed=True,
+        min_length=8,
+        regex=r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]*$",
+    ),
+) -> str:
+    return password
+
+
 @router.put("/me", response_model=User)
 def update_user_me(
     *,
     db: Session = Depends(get_db),
-    password: str = Body(None),
+    password: str = Depends(strong_password),
     full_name: str = Body(None),
     email: EmailStr = Body(None),
     current_user: DBUser = Depends(get_current_active_user),
@@ -93,7 +104,7 @@ def read_user_me(
 def create_user_open(
     *,
     db: Session = Depends(get_db),
-    password: str = Body(...),
+    password: str = Depends(strong_password),
     email: EmailStr = Body(...),
     full_name: str = Body(None),
 ):
