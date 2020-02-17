@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/Toreno96/hello-fastapi.svg?branch=master)](https://travis-ci.com/Toreno96/hello-fastapi)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FToreno96%2Fhello-fastapi%2Fbadge&style=flat)](https://actions-badge.atrox.dev/Toreno96/hello-fastapi/goto)
 
 # Hello FastAPI
 
