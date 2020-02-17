@@ -1,0 +1,7 @@
+services:
+    - docker
+script:
+    - docker-compose up -d
+    - docker ps -a
+    - docker-compose logs backend
+    - docker-compose exec backend-tests /tests-start.sh
