@@ -1,7 +1,9 @@
+language: minimal
 services:
     - docker
-script:
+install:
     - docker-compose up -d
     - docker ps -a
     - docker-compose logs backend
+script:
     - docker-compose exec backend-tests /tests-start.sh
